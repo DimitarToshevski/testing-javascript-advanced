@@ -1,1 +1,24 @@
-<p>products works!</p>
+<form
+  class="control-panel"
+  [formGroup]="productsForm"
+  (ngSubmit)="addProduct()"
+>
+  <div class="input-container">
+    <label for="name">Product Name</label>
+    <input type="text" id="name" formControlName="name" />
+  </div>
+  <div class="input-container">
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" formControlName="quantity" />
+  </div>
+  <button type="submit" class="button" id="btnAddProduct">Add Product</button>
+</form>
+<hr />
+<section class="shopping-list-output">
+  <h3>Shopping List</h3>
+  <ul class="shopping-list">
+    <li *ngFor="let product of products" class="shopping-item">
+      {{ product.name }}
+    </li>
+  </ul>
+</section>
