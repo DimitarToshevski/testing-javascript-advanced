@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "JS testing Advanced",
   "scripts": {
-    "start-fe-angular": "cd front-end/angular && ng serve",
-    "start-fe-react": "cd front-end/react && <ADD THE COMMAND TO START HERE>",
+    "start-fe-angular": "cd front-end/angular-app && ng serve",
+    "start-fe-react": "cd front-end/react-app && <ADD THE COMMAND TO START HERE>",
     "start-node": "cd back-end && npm start",
     "start-angular": "concurrently --kill-others \"npm run start-fe-angular\" \"npm run start-node\"",
     "start-react": "concurrently --kill-others \"npm run start-fe-react\" \"npm run start-node\"",
-    "install-angular": "cd front-end/angular && npm i",
-    "install-react": "cd front-end/react && npm i",
+    "install-angular": "cd front-end/angular-app && npm i",
+    "install-react": "cd front-end/react-app && npm i",
     "install-node": "cd back-end && npm i",
     "install": "concurrently --kill-others \"npm i\" \"npm run install-angular\" \"npm run install-react\" \"npm run install-be\""
   },
