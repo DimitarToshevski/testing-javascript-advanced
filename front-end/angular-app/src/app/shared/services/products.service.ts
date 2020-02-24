@@ -13,4 +13,16 @@ export class ProductsService {
     const headers = new HttpHeaders({ Authorization: token });
     return this._http.get<Array<IProduct>>(`${this.api}/products`, { headers });
   }
+
+  addProduct(product: IProduct): Observable<{ message: string }> {
+    const token = sessionStorage.getItem("token");
+    const headers = new HttpHeaders({ Authorization: token });
+    return this._http.post<{ message: string }>(
+      `${this.api}/products`,
+      product,
+      {
+        headers
+      }
+    );
+  }
 }

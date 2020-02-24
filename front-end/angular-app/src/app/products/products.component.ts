@@ -29,7 +29,10 @@ export class ProductsComponent implements OnInit {
   }
 
   addProduct(): void {
-    this.products.push(this.productsForm.value);
+    const product = this.productsForm.value;
     this.productsForm.reset();
+    this._productsService.addProduct(product).subscribe(() => {
+      this.products.push(product);
+    });
   }
 }
