@@ -8,6 +8,7 @@
     "start-node": "cd back-end && npm start",
     "start-angular": "concurrently --kill-others \"npm run start-fe-angular\" \"npm run start-node\"",
     "start-react": "concurrently --kill-others \"npm run start-fe-react\" \"npm run start-node\"",
+    "start": "concurrently --kill-others \"npm run start-fe-angular\" \"npm run start-node\"",
     "install-angular": "cd front-end/angular-app && npm i",
     "install-react": "cd front-end/react-app && npm i",
     "install-node": "cd back-end && npm i",
