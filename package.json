@@ -4,19 +4,19 @@
   "description": "JS testing Advanced",
   "scripts": {
     "start-fe-angular": "cd front-end/angular-app && ng serve",
-    "start-fe-react": "cd front-end/react-app && <ADD THE COMMAND TO START HERE>",
+    "start-fe-react": "cd front-end/react-app && npm start",
     "start-node": "cd back-end && npm start",
-    "start-angular": "concurrently --kill-others \"npm run start-fe-angular\" \"npm run start-node\"",
-    "start-react": "concurrently --kill-others \"npm run start-fe-react\" \"npm run start-node\"",
-    "start": "concurrently --kill-others \"npm run start-fe-angular\" \"npm run start-node\"",
+    "start-angular": "npm-run-all --parallel start-fe-angular start-node",
+    "start-react": "npm-run-all --parallel start-fe-react start-node",
+    "start": "npm-run-all --parallel start-fe-angular start-fe-react start-node",
     "install-angular": "cd front-end/angular-app && npm i",
     "install-react": "cd front-end/react-app && npm i",
     "install-node": "cd back-end && npm i",
-    "install": "concurrently --kill-others \"npm i\" \"npm run install-angular\" \"npm run install-react\" \"npm run install-be\""
+    "install": "npm-run-all --parallel install-angular install-react install-node"
   },
   "author": "MM",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^5.1.0"
+    "npm-run-all": "^4.1.5"
   }
 }
