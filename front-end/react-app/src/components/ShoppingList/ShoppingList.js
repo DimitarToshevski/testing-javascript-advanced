@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import ShoppingItem from '../ShoppingItem/ShoppingItem';
-import './ShoppingList.css';
+import ShoppingItem from "../ShoppingItem/ShoppingItem";
+import "./ShoppingList.css";
 
 const ShoppingList = ({ items }) => (
   <section>
-    <h3>Shopping List</h3>
+    <h3 className="list-heading">Shopping List</h3>
     <ul className="shopping-list">
-      {items.map(item => (
-        <ShoppingItem key={item.id} text={item.text} />
+      {items.map((item, index) => (
+        <ShoppingItem key={index} name={item.name} quantity={item.quantity} />
       ))}
     </ul>
   </section>

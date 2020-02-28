@@ -1,3 +1,7 @@
+.list-heading {
+  margin: 1rem;
+}
+
 .shopping-list {
   display: flex;
   flex-direction: column;

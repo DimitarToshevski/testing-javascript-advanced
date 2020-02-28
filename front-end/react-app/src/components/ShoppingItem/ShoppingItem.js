@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import './ShoppingItem.css';
+import "./ShoppingItem.css";
 
-const ShoppingItem = ({ text }) => <li className="shopping-item">{text}</li>;
+const ShoppingItem = ({ name, quantity }) => (
+  <li className="shopping-item">{`Product: ${name}, Quantity: ${quantity}`}</li>
+);
 
 export default ShoppingItem;
