@@ -1,9 +1,9 @@
 import React from "react";
 
-import "./ShoppingItem.css";
+import { Item } from "./ShoppingItemStyles";
 
 const ShoppingItem = ({ name, quantity }) => (
-  <li className="shopping-item">{`Product: ${name}, Quantity: ${quantity}`}</li>
+  <Item>{`Product: ${name}, Quantity: ${quantity}`}</Item>
 );
 
 export default ShoppingItem;

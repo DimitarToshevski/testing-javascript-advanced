@@ -8,10 +8,10 @@ import InputField from "components/InputField/InputField";
 import Button from "components/Button/Button";
 import ShoppingList from "components/ShoppingList/ShoppingList";
 
-import "./Products.css";
+import { FormWrapper, ProductSection, ButtonWrapper } from "./ProductsStyles";
 
 const Products = () => {
-  const [authToken] = useAuthToken();
+  const [authToken, , logout] = useAuthToken();
   const [products, setProducts] = useState([]);
   const [productName, setProductName] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -47,27 +47,32 @@ const Products = () => {
 
   return (
     <>
-      <section className="control-panel">
-        <InputField
-          name="name"
-          label="Product Name"
-          value={productName}
-          onChange={e => setProductName(e.target.value)}
-        />
-        <InputField
-          name="quantity"
-          label="Quantity"
-          type="number"
-          value={quantity}
-          onChange={e => setQuantity(e.target.value)}
-        />
-
-        <Button
-          text="Add Product"
-          onClick={addProduct}
-          isDisabled={productName === "" || quantity === ""}
-        />
-      </section>
+      <FormWrapper>
+        <ProductSection>
+          <InputField
+            name="name"
+            label="Product Name"
+            value={productName}
+            onChange={e => setProductName(e.target.value)}
+          />
+          <InputField
+            name="quantity"
+            label="Quantity"
+            type="number"
+            value={quantity}
+            onChange={e => setQuantity(e.target.value)}
+          />
+          <Button
+            text="Add Product"
+            type="primary"
+            onClick={addProduct}
+            isDisabled={productName === "" || quantity === ""}
+          />
+        </ProductSection>
+        <ButtonWrapper>
+          <Button text="Logout" onClick={logout} />
+        </ButtonWrapper>
+      </FormWrapper>
 
       <hr />
 

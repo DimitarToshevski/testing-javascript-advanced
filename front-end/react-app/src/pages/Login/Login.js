@@ -5,8 +5,8 @@ import paths from "paths";
 import { useAuthToken } from "hooks/useAuthToken";
 import ApiService from "services/ApiService";
 import InputField from "components/InputField/InputField";
-import Button from "components/Button/Button";
-import "./Login.css";
+
+import { FormWrapper, Form, ButtonWrapper, LoginButton } from "./LoginStyles";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -31,28 +31,28 @@ const Login = () => {
   }
 
   return (
-    <div className="login-container">
+    <FormWrapper>
       <h1>Login</h1>
-      <form className="login-form">
+      <Form>
         <InputField
-          id="username"
+          name="username"
           label="Username"
           value={username}
           onChange={e => setUsername(e.target.value)}
         />
         <InputField
-          id="password"
+          name="password"
           label="Password"
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
 
-        <div className="button-container">
-          <Button text="Login" onClick={login} />
-        </div>
-      </form>
-    </div>
+        <ButtonWrapper>
+          <LoginButton text="Login" type="primary" onClick={login} />
+        </ButtonWrapper>
+      </Form>
+    </FormWrapper>
   );
 };
 export default Login;

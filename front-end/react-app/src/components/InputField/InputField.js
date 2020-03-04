@@ -1,12 +1,19 @@
-import React from 'react';
+import React from "react";
 
-import './InputField.css';
+import { InputWrapper, Label, Input } from "./InputFieldStyles";
 
-const InputField = ({ name, label, type = 'text', value = '', onChange }) => (
-  <div className="input-container">
-    <label htmlFor={name}>{label}</label>
-    <input id={name} type={type} value={value} onChange={onChange} />
-  </div>
+const InputField = ({
+  name,
+  label,
+  type = "text",
+  value = "",
+  onChange,
+  ...props
+}) => (
+  <InputWrapper {...props}>
+    <Label htmlFor={name}>{label}</Label>
+    <Input id={name} type={type} value={value} onChange={onChange} />
+  </InputWrapper>
 );
 
 export default InputField;

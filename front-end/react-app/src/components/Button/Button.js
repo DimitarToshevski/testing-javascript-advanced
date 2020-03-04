@@ -1,11 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import './Button.css';
+import { Btn } from "./ButtonStyles";
 
-const Button = ({ text, onClick, isDisabled = false }) => (
-  <button className="button" onClick={onClick} disabled={isDisabled}>
+const Button = ({
+  text,
+  onClick,
+  type = "default",
+  isDisabled = false,
+  ...props
+}) => (
+  <Btn {...props} type={type} onClick={onClick} disabled={isDisabled}>
     {text}
-  </button>
+  </Btn>
 );
 
 export default Button;

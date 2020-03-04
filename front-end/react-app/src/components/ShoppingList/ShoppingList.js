@@ -1,16 +1,16 @@
 import React from "react";
 
-import ShoppingItem from "../ShoppingItem/ShoppingItem";
-import "./ShoppingList.css";
+import ShoppingItem from "components/ShoppingItem/ShoppingItem";
+import { ListHeader, ListContainer } from "./ShoppingListStyles";
 
 const ShoppingList = ({ items }) => (
   <section>
-    <h3 className="list-heading">Shopping List</h3>
-    <ul className="shopping-list">
+    <ListHeader>Shopping List</ListHeader>
+    <ListContainer>
       {items.map((item, index) => (
         <ShoppingItem key={index} name={item.name} quantity={item.quantity} />
       ))}
-    </ul>
+    </ListContainer>
   </section>
 );
 
