@@ -6,11 +6,18 @@ import { useAuthToken } from "hooks/useAuthToken";
 import ApiService from "services/ApiService";
 import InputField from "components/InputField/InputField";
 
-import { FormWrapper, Form, ButtonWrapper, LoginButton } from "./LoginStyles";
+import {
+  FormWrapper,
+  Form,
+  ButtonWrapper,
+  LoginButton,
+  ErrorMsg
+} from "./LoginStyles";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const [authToken, setToken] = useAuthToken();
 
   const login = async e => {
@@ -22,7 +29,10 @@ const Login = () => {
     });
 
     if (res.token) {
+      setError(null);
       setToken(res.token);
+    } else {
+      setError(res.message);
     }
   };
 
@@ -49,9 +59,15 @@ const Login = () => {
         />
 
         <ButtonWrapper>
-          <LoginButton text="Login" type="primary" onClick={login} />
+          <LoginButton
+            text="Login"
+            type="primary"
+            onClick={login}
+            isDisabled={username === "" || password === ""}
+          />
         </ButtonWrapper>
       </Form>
+      {error && <ErrorMsg>{error}</ErrorMsg>}
     </FormWrapper>
   );
 };

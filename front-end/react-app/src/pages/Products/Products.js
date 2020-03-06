@@ -26,19 +26,24 @@ const Products = () => {
     fetchProducts();
   }, [authToken]);
 
-  const addProduct = () => {
-    const lastItem = products[products.length - 1];
+  const addProduct = async () => {
+    const newProduct = {
+      name: productName,
+      quantity
+    };
 
-    setProducts([
-      ...products,
-      {
-        id: lastItem.id + 1,
-        text: `Product: ${productName}, Quantity: ${quantity}`
-      }
-    ]);
+    const res = await ApiService.post("products", { ...newProduct }, authToken);
+
+    setProducts([...products, { id: res.data.id, ...newProduct }]);
 
     setProductName("");
     setQuantity("");
+  };
+
+  const deleteProduct = async productId => {
+    await ApiService.remove(`products/${productId}`, authToken);
+
+    setProducts(products.filter(item => item.id !== productId));
   };
 
   if (!authToken) {
@@ -76,7 +81,7 @@ const Products = () => {
 
       <hr />
 
-      <ShoppingList items={products} />
+      <ShoppingList items={products} onItemDelete={deleteProduct} />
     </>
   );
 };

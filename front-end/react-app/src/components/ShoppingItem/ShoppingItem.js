@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { Item } from "./ShoppingItemStyles";
+import { Item, ItemText, DeleteButton } from "./ShoppingItemStyles";
 
-const ShoppingItem = ({ name, quantity }) => (
-  <Item>{`Product: ${name}, Quantity: ${quantity}`}</Item>
-);
+const ShoppingItem = ({ id, name, quantity, onDelete }) => {
+  const [isComplete, setComplete] = useState(false);
 
+  const handleDelete = e => {
+    e.stopPropagation();
+
+    onDelete(id);
+  };
+
+  return (
+    <Item onClick={() => setComplete(!isComplete)}>
+      <ItemText
+        completed={isComplete}
+      >{`Product: ${name}, Quantity: ${quantity}`}</ItemText>
+      <DeleteButton onClick={handleDelete}>&times;</DeleteButton>
+    </Item>
+  );
+};
 export default ShoppingItem;

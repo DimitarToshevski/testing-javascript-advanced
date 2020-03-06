@@ -14,16 +14,27 @@ const get = (url, token) =>
     }
   });
 
-const post = (url, data) =>
+const post = (url, data, token = null) =>
   sendRequest(url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      ...(token && { Authorization: token })
     },
     body: JSON.stringify(data)
   });
 
+const remove = (url, token) =>
+  sendRequest(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token
+    }
+  });
+
 export default {
   get,
-  post
+  post,
+  remove
 };

@@ -27,3 +27,8 @@ export const ButtonWrapper = styled.div`
 export const LoginButton = styled(Button)`
   margin: 0;
 `;
+
+export const ErrorMsg = styled.div`
+  padding: 10px 0;
+  color: #e60000;
+`;
