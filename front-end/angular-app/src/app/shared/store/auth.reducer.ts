@@ -1,5 +1,6 @@
-import { User } from "@shared/models";
 import { on, createReducer, Action } from "@ngrx/store";
+
+import { User } from "@shared/models";
 
 import * as fromActions from "./auth.actions";
 

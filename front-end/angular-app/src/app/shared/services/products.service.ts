@@ -1,13 +1,17 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { IProduct, IResponse } from "@shared/interfaces";
+import {
+  IProduct,
+  IResponse,
+  IBaseDTO,
+  IProductsService
+} from "@shared/interfaces";
+import { API_PREFIX } from "@shared/injection-tokens";
 
 @Injectable({ providedIn: "root" })
-export class ProductsService {
-  api = "http://localhost:3000/api";
-
-  constructor(private _http: HttpClient) {}
+export class ProductsService implements IProductsService {
+  constructor(@Inject(API_PREFIX) private api, private _http: HttpClient) {}
 
   getProducts(): Observable<Array<IProduct>> {
     const token = sessionStorage.getItem("token");
@@ -16,11 +20,11 @@ export class ProductsService {
     return this._http.get<Array<IProduct>>(`${this.api}/products`, { headers });
   }
 
-  addProduct(product: IProduct): Observable<IResponse<{ id: string }>> {
+  addProduct(product: IProduct): Observable<IResponse<IBaseDTO>> {
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({ Authorization: token });
 
-    return this._http.post<IResponse<{ id: string }>>(
+    return this._http.post<IResponse<IBaseDTO>>(
       `${this.api}/products`,
       product,
       {

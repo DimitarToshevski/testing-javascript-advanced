@@ -1,23 +1,26 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
+
+import { Store } from "@ngrx/store";
+
 import {
   ILoginInput,
   IAuthService,
   ILoginResponseData,
   IResponse
 } from "@shared/interfaces";
-import { Store } from "@ngrx/store";
+import { User } from "@shared/models";
+import { API_PREFIX } from "@shared/injection-tokens";
 
 import * as fromAuthReducer from "../store/auth.reducer";
 import * as fromAuthActions from "../store/auth.actions";
 
 @Injectable({ providedIn: "root" })
 export class AuthService implements IAuthService {
-  api = "http://localhost:3000/api";
-
   constructor(
+    @Inject(API_PREFIX) private api,
     private _http: HttpClient,
     private _store: Store<fromAuthReducer.AuthState>
   ) {}
@@ -35,7 +38,7 @@ export class AuthService implements IAuthService {
 
           this._store.dispatch(
             fromAuthActions.loginSuccess({
-              payload: { username: response.data.username }
+              payload: new User(response.data)
             })
           );
         }),
