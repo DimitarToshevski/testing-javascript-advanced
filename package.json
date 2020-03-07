@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "description": "JS testing Advanced",
   "scripts": {
-    "start-fe-angular": "cd front-end/angular-app && ng serve",
+    "start-fe-angular": "cd front-end/angular-app && ng serve --open",
     "start-fe-react": "cd front-end/react-app && npm start",
     "start-node": "cd back-end && npm start",
-    "start-angular": "npm-run-all --parallel start-fe-angular start-node",
-    "start-react": "npm-run-all --parallel start-fe-react start-node",
     "start": "npm-run-all --parallel start-fe-angular start-fe-react start-node",
     "install-angular": "cd front-end/angular-app && npm i",
     "install-react": "cd front-end/react-app && npm i",
