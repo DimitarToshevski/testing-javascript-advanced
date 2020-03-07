@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-router.post('', (req, res, next) => {
+router.post('', (req, res) => {
   const { username, password } = req.body;
   if (username === 'test' && password === 'test') {
     const token = jwt.sign(
@@ -15,7 +15,10 @@ router.post('', (req, res, next) => {
     );
 
     return res.status(200).json({
-      token,
+      data: {
+        token,
+        username
+      },
       message: 'Successfully logged in!'
     });
   }

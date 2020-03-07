@@ -6,11 +6,11 @@ const router = express.Router();
 
 let products = [{ id: generateId(), name: 'Milk', quantity: 1 }];
 
-router.get('', checkAuth, (req, res, next) => {
+router.get('', checkAuth, (req, res) => {
   res.json(products);
 });
 
-router.post('', checkAuth, (req, res, next) => {
+router.post('', checkAuth, (req, res) => {
   const newItemId = generateId();
 
   products.push({ id: newItemId, ...req.body });
@@ -20,7 +20,7 @@ router.post('', checkAuth, (req, res, next) => {
   });
 });
 
-router.delete('/:productId', checkAuth, (req, res, next) => {
+router.delete('/:productId', checkAuth, (req, res) => {
   products = products.filter(item => item.id !== req.params.productId);
 
   res.status(200).json({

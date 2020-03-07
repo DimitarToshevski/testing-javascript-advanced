@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { IProduct } from "@shared/interfaces";
+import { IProduct, IResponse } from "@shared/interfaces";
 
 @Injectable({ providedIn: "root" })
 export class ProductsService {
@@ -16,13 +16,11 @@ export class ProductsService {
     return this._http.get<Array<IProduct>>(`${this.api}/products`, { headers });
   }
 
-  addProduct(
-    product: IProduct
-  ): Observable<{ message: string; data: { id: string } }> {
+  addProduct(product: IProduct): Observable<IResponse<{ id: string }>> {
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({ Authorization: token });
 
-    return this._http.post<{ message: string; data: { id: string } }>(
+    return this._http.post<IResponse<{ id: string }>>(
       `${this.api}/products`,
       product,
       {
@@ -31,15 +29,12 @@ export class ProductsService {
     );
   }
 
-  deleteProduct(productId: string): Observable<{ message: string }> {
+  deleteProduct(productId: string): Observable<IResponse> {
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({ Authorization: token });
 
-    return this._http.delete<{ message: string }>(
-      `${this.api}/products/${productId}`,
-      {
-        headers
-      }
-    );
+    return this._http.delete<IResponse>(`${this.api}/products/${productId}`, {
+      headers
+    });
   }
 }

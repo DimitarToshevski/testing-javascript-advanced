@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProductsService } from "@shared/services";
 import { IProduct } from "@shared/interfaces";
+import { Store } from "@ngrx/store";
+
+import * as fromAuthStore from "@shared/store";
 
 @Component({
   selector: "app-products",
@@ -14,7 +17,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _productsService: ProductsService
+    private _productsService: ProductsService,
+    private _store: Store<fromAuthStore.AuthState>
   ) {}
 
   ngOnInit() {
@@ -42,5 +46,9 @@ export class ProductsComponent implements OnInit {
     this._productsService.deleteProduct(id).subscribe(() => {
       this.products = this.products.filter(p => p.id !== id);
     });
+  }
+
+  logout(): void {
+    this._store.dispatch(fromAuthStore.logout());
   }
 }

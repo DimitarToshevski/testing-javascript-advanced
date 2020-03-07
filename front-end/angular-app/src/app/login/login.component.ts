@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { AuthService } from "@shared/services";
+import { Store } from "@ngrx/store";
+
+import * as fromStore from "@shared/store";
 
 @Component({
   selector: "app-login",
@@ -13,8 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _router: Router,
-    private _authService: AuthService
+    private _store: Store<fromStore.AuthState>
   ) {}
 
   ngOnInit(): void {
@@ -25,9 +25,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    this._authService.login(this.loginForm.value).subscribe(data => {
-      console.log(data);
-      this._router.navigateByUrl("/products");
-    });
+    this._store.dispatch(fromStore.login({ payload: this.loginForm.value }));
   }
 }

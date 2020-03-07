@@ -6,6 +6,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { RouterModule } from "@angular/router";
 import { LoginComponent } from "./login/login.component";
 import { HttpClientModule } from "@angular/common/http";
+import { StoreModule } from "@ngrx/store";
+
+import * as fromAuthStore from "@shared/store";
+import { EffectsModule } from "@ngrx/effects";
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -14,7 +18,9 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(fromAuthStore.AuthReducer),
+    EffectsModule.forRoot([fromAuthStore.AuthEffects])
   ],
   bootstrap: [AppComponent]
 })
