@@ -17,7 +17,11 @@
 <section class="shopping-list-output">
   <h3>Shopping List</h3>
   <ul class="shopping-list">
-    <li *ngFor="let product of products" class="shopping-item">
+    <li
+      *ngFor="let product of products"
+      class="shopping-item"
+      (click)="deleteProduct(product)"
+    >
       {{ product.name }} Quantity: {{ product.quantity }}
     </li>
   </ul>

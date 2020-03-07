@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { IProduct } from "../shared/interfaces";
-import { ProductsService } from "../shared/services";
+import { ProductsService } from "@shared/services";
+import { IProduct } from "@shared/interfaces";
 
 @Component({
   selector: "app-products",
@@ -20,7 +20,7 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.productsForm = this._fb.group({
       name: ["", Validators.required],
-      quantity: [""]
+      quantity: ["", Validators.required]
     });
 
     this._productsService.getProducts().subscribe(products => {
@@ -30,9 +30,17 @@ export class ProductsComponent implements OnInit {
 
   addProduct(): void {
     const product = this.productsForm.value;
+
     this.productsForm.reset();
-    this._productsService.addProduct(product).subscribe(() => {
-      this.products.push(product);
+
+    this._productsService.addProduct(product).subscribe(res => {
+      this.products.push({ ...product, id: res.data.id });
+    });
+  }
+
+  deleteProduct({ id }): void {
+    this._productsService.deleteProduct(id).subscribe(() => {
+      this.products = this.products.filter(p => p.id !== id);
     });
   }
 }
