@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _fb: FormBuilder,
-    private _store: Store<fromStore.AuthState>
+    private _store: Store<fromStore.IAuthState>
   ) {}
 
   ngOnInit(): void {
@@ -27,5 +27,10 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this._store.dispatch(fromStore.login({ payload: this.loginForm.value }));
+  }
+
+  isControlInvalid(controlName: string): boolean {
+    const control = this.loginForm.get(controlName);
+    return !control.valid && control.dirty;
   }
 }

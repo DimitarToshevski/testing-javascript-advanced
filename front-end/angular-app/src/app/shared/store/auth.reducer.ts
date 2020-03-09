@@ -1,16 +1,22 @@
-import { on, createReducer, Action } from "@ngrx/store";
+import {
+  on,
+  createReducer,
+  Action,
+  createSelector,
+  createFeatureSelector
+} from "@ngrx/store";
 
 import { User } from "@shared/models";
 
 import * as fromActions from "./auth.actions";
 
-export interface AuthState {
+export interface IAuthState {
   user: User;
   loading: boolean;
   errorMessage: string;
 }
 
-export const authInitialState: AuthState = {
+export const authInitialState: IAuthState = {
   user: null,
   loading: false,
   errorMessage: null
@@ -33,6 +39,16 @@ const authReducer = createReducer(
   on(fromActions.logout, () => ({ ...authInitialState }))
 );
 
-export function AuthReducer(state: AuthState, action: Action): AuthState {
+export function reducer(
+  state: IAuthState = authInitialState,
+  action: Action
+): IAuthState {
   return authReducer(state, action);
 }
+
+export const selectAuthState = createSelector(
+  createFeatureSelector<IAuthState>("auth"),
+  state => state
+);
+
+export const selectUser = createSelector(selectAuthState, state => state.user);

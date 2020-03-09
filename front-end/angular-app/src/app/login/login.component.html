@@ -5,6 +5,9 @@
 
     <label for="username">Username</label>
     <input type="text" id="username" formControlName="username" />
+    <span *ngIf="isControlInvalid('username')" class="error"
+      >Please, enter a username.</span
+    >
 
     <label for="password">Password</label>
     <input
@@ -13,6 +16,10 @@
       formControlName="password"
       autocomplete="new-password"
     />
+    <span *ngIf="isControlInvalid('password')" class="error"
+      >Please, enter a password.</span
+    >
+
     <span class="button-container">
       <button class="button" type="submit">Login</button>
     </span>

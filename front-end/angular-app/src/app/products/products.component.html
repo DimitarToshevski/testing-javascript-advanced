@@ -1,21 +1,26 @@
-<button (click)="logout()">Logout</button>
-<form
-  class="control-panel"
-  [formGroup]="productsForm"
-  (ngSubmit)="addProduct()"
->
-  <div class="input-container">
-    <label for="name">Product Name</label>
-    <input type="text" id="name" formControlName="name" />
-  </div>
+<div class="row">
+  <form
+    class="control-panel"
+    [formGroup]="productsForm"
+    (ngSubmit)="addProduct()"
+  >
+    <div class="input-container">
+      <label for="name">Product Name</label>
+      <input type="text" id="name" formControlName="name" />
+    </div>
 
-  <div class="input-container">
-    <label for="quantity">Quantity</label>
-    <input type="number" id="quantity" formControlName="quantity" />
-  </div>
+    <div class="input-container">
+      <label for="quantity">Quantity</label>
+      <input type="number" id="quantity" formControlName="quantity" />
+    </div>
 
-  <button type="submit" class="button" id="btnAddProduct">Add Product</button>
-</form>
+    <button type="submit" class="button" id="btnAddProduct">Add Product</button>
+  </form>
+
+  <div class="button-container">
+    <button class="button" (click)="logout()">Logout</button>
+  </div>
+</div>
 
 <hr />
 
@@ -23,12 +28,11 @@
   <h3>Shopping List</h3>
 
   <ul class="shopping-list">
-    <li
-      *ngFor="let product of products"
-      class="shopping-item"
-      (click)="deleteProduct(product)"
-    >
-      {{ product.name }} Quantity: {{ product.quantity }}
+    <li *ngFor="let product of products" class="shopping-item">
+      <span class="shopping-item-text"
+        >Product: {{ product.name }}, Quantity: {{ product.quantity }}</span
+      >
+      <span class="close-button" (click)="deleteProduct(product)">×</span>
     </li>
   </ul>
 </section>

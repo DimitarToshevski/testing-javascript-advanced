@@ -18,7 +18,7 @@ export class ProductsComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _productsService: ProductsService,
-    private _store: Store<fromAuthStore.AuthState>
+    private _store: Store<fromAuthStore.IAuthState>
   ) {}
 
   ngOnInit() {
@@ -33,6 +33,10 @@ export class ProductsComponent implements OnInit {
   }
 
   addProduct(): void {
+    if (!this.productsForm.valid) {
+      return;
+    }
+
     const product = this.productsForm.value;
 
     this.productsForm.reset();

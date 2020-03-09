@@ -12,7 +12,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { LoginComponent } from "./login/login.component";
 
-import * as fromAuthStore from "@shared/store";
+import * as fromStore from "@shared/store";
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -22,8 +22,8 @@ import * as fromAuthStore from "@shared/store";
     RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot(fromAuthStore.AuthReducer),
-    EffectsModule.forRoot([fromAuthStore.AuthEffects])
+    StoreModule.forRoot(fromStore.reducers),
+    EffectsModule.forRoot(fromStore.effects)
   ],
   bootstrap: [AppComponent]
 })

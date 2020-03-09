@@ -2,7 +2,6 @@ import { Injectable, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { tap, catchError } from "rxjs/operators";
-
 import { Store } from "@ngrx/store";
 
 import {
@@ -22,7 +21,7 @@ export class AuthService implements IAuthService {
   constructor(
     @Inject(API_PREFIX) private api,
     private _http: HttpClient,
-    private _store: Store<fromAuthReducer.AuthState>
+    private _store: Store<fromAuthReducer.IAuthState>
   ) {}
 
   login(credentials: ILoginInput): Observable<IResponse<ILoginResponseData>> {
