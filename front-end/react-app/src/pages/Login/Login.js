@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import paths from "paths";
-import { useAuthToken } from "hooks/useAuthToken";
-import ApiService from "services/ApiService";
+import { useFormState } from "hooks/useFormState";
+import { loginUser } from "store/actions/authActions";
 import InputField from "components/InputField/InputField";
 
 import {
@@ -14,29 +15,20 @@ import {
   ErrorMsg
 } from "./LoginStyles";
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [authToken, setToken] = useAuthToken();
+const Login = ({ token, error, dispatch }) => {
+  const [formState, handleChange] = useFormState({
+    username: "",
+    password: ""
+  });
+  const { username, password } = formState;
 
   const login = async e => {
     e.preventDefault();
 
-    const res = await ApiService.post("login", {
-      username,
-      password
-    });
-
-    if (res.token) {
-      setError(null);
-      setToken(res.token);
-    } else {
-      setError(res.message);
-    }
+    dispatch(loginUser(username, password));
   };
 
-  if (authToken) {
+  if (token) {
     return <Redirect to={paths.products} />;
   }
 
@@ -48,14 +40,14 @@ const Login = () => {
           name="username"
           label="Username"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={handleChange}
         />
         <InputField
           name="password"
           label="Password"
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={handleChange}
         />
 
         <ButtonWrapper>
@@ -71,4 +63,10 @@ const Login = () => {
     </FormWrapper>
   );
 };
-export default Login;
+
+const mapStateToProps = ({ auth }) => ({
+  token: auth.token,
+  error: auth.error
+});
+
+export default connect(mapStateToProps)(Login);

@@ -1,52 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import paths from "paths";
-import { useAuthToken } from "hooks/useAuthToken";
-import ApiService from "services/ApiService";
+import { useFormState } from "hooks/useFormState";
+import { logout } from "store/actions/authActions";
+import {
+  getProducts,
+  addProduct,
+  deleteProduct
+} from "store/actions/productActions";
 import InputField from "components/InputField/InputField";
 import Button from "components/Button/Button";
 import ShoppingList from "components/ShoppingList/ShoppingList";
 
 import { FormWrapper, ProductSection, ButtonWrapper } from "./ProductsStyles";
 
-const Products = () => {
-  const [authToken, , logout] = useAuthToken();
-  const [products, setProducts] = useState([]);
-  const [productName, setProductName] = useState("");
-  const [quantity, setQuantity] = useState("");
+const Products = ({ token, products, dispatch }) => {
+  const [formState, handleChange, resetForm] = useFormState({
+    name: "",
+    quantity: ""
+  });
+  const { name, quantity } = formState;
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const res = await ApiService.get("products", authToken);
+    if (token) {
+      dispatch(getProducts(token));
+    }
+  }, [dispatch, token]);
 
-      setProducts(res);
-    };
-
-    fetchProducts();
-  }, [authToken]);
-
-  const addProduct = async () => {
+  const handleAdd = async () => {
     const newProduct = {
-      name: productName,
+      name,
       quantity
     };
 
-    const res = await ApiService.post("products", { ...newProduct }, authToken);
+    dispatch(addProduct(newProduct, token));
 
-    setProducts([...products, { id: res.data.id, ...newProduct }]);
-
-    setProductName("");
-    setQuantity("");
+    resetForm();
   };
 
-  const deleteProduct = async productId => {
-    await ApiService.remove(`products/${productId}`, authToken);
+  const handleDelete = async productId =>
+    dispatch(deleteProduct(productId, token));
 
-    setProducts(products.filter(item => item.id !== productId));
-  };
+  const handleLogout = () => dispatch(logout());
 
-  if (!authToken) {
+  if (!token) {
     return <Redirect to={paths.login} />;
   }
 
@@ -57,33 +56,38 @@ const Products = () => {
           <InputField
             name="name"
             label="Product Name"
-            value={productName}
-            onChange={e => setProductName(e.target.value)}
+            value={name}
+            onChange={handleChange}
           />
           <InputField
             name="quantity"
             label="Quantity"
             type="number"
             value={quantity}
-            onChange={e => setQuantity(e.target.value)}
+            onChange={handleChange}
           />
           <Button
             text="Add Product"
             type="primary"
-            onClick={addProduct}
-            isDisabled={productName === "" || quantity === ""}
+            onClick={handleAdd}
+            isDisabled={name === "" || quantity === ""}
           />
         </ProductSection>
         <ButtonWrapper>
-          <Button text="Logout" onClick={logout} />
+          <Button text="Logout" onClick={handleLogout} />
         </ButtonWrapper>
       </FormWrapper>
 
       <hr />
 
-      <ShoppingList items={products} onItemDelete={deleteProduct} />
+      <ShoppingList items={products} onItemDelete={handleDelete} />
     </>
   );
 };
 
-export default Products;
+const mapStateToProps = ({ auth, products }) => ({
+  token: auth.token,
+  products: products.data
+});
+
+export default connect(mapStateToProps)(Products);
