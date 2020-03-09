@@ -7,11 +7,21 @@
     <div class="input-container">
       <label for="name">Product Name</label>
       <input type="text" id="name" formControlName="name" />
+      <span
+        *ngIf="
+          !productsForm.get('name').valid && productsForm.get('name').dirty
+        "
+        class="error"
+        >{{ isControlInvalid("name") | errorMessage }}</span
+      >
     </div>
 
     <div class="input-container">
       <label for="quantity">Quantity</label>
       <input type="number" id="quantity" formControlName="quantity" />
+      <span *ngIf="isControlInvalid('quantity') as error" class="error">{{
+        error | errorMessage: "100"
+      }}</span>
     </div>
 
     <button
@@ -39,7 +49,8 @@
   <ul class="shopping-list">
     <li *ngFor="let product of products" class="shopping-item">
       <span scratchText class="shopping-item-text"
-        >Product: {{ product.name }}, Quantity: {{ product.quantity }}</span
+        >Product: {{ product.name | titlecase }}, Quantity:
+        {{ product.quantity }}</span
       >
       <span class="close-button" (click)="deleteProduct(product)">×</span>
     </li>

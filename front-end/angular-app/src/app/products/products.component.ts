@@ -23,8 +23,8 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit() {
     this.productsForm = this._fb.group({
-      name: ["", Validators.required],
-      quantity: ["", Validators.required]
+      name: ["", [Validators.required, Validators.pattern(/[a-zA-Z]/)]],
+      quantity: ["", [Validators.required, Validators.max(100)]]
     });
 
     this._productsService.getProducts().subscribe(products => {
@@ -54,5 +54,13 @@ export class ProductsComponent implements OnInit {
 
   logout(): void {
     this._store.dispatch(fromAuthStore.logout());
+  }
+
+  isControlInvalid(controlName: string): string {
+    const control = this.productsForm.get(controlName);
+
+    return (
+      !control.valid && control.dirty && Object.keys(control.errors).toString()
+    );
   }
 }
