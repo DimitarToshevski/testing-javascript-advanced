@@ -8,6 +8,12 @@ h3 {
   margin: 1rem;
 }
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
 .control-panel {
   width: 25rem;
 }
@@ -34,6 +40,11 @@ h3 {
   padding: 0.5rem 1rem;
   border-radius: 3px;
   margin: 0 1rem;
+  &[disabled] {
+    color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+  }
 }
 
 .shopping-list {
@@ -53,4 +64,24 @@ h3 {
   font-weight: bold;
   display: flex;
   justify-content: space-between;
+  &-text,
+  .close-button {
+    cursor: pointer;
+  }
+}
+
+.error {
+  font-size: 13px;
+  margin-top: 5px;
+  color: rgba(155, 12, 12, 1);
+}
+
+.hint {
+  font-size: 13px;
+  margin-top: 5px;
+  color: rgba(12, 12, 12, 0.4);
+}
+
+.scratched {
+  text-decoration: line-through;
 }

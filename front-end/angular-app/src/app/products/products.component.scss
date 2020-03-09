@@ -1,38 +1,24 @@
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  form {
-    margin-bottom: 15px;
-    order: 1;
-  }
-  .button-container {
-    width: 100%;
-    text-align: right;
-    padding-right: 0;
-    padding-top: 25px;
-    &,
-    button {
-      height: 100%;
-    }
-  }
+form {
+  margin-bottom: 15px;
+  order: 1;
 }
-
-.shopping-item {
-  &-text,
-  .close-button {
-    cursor: pointer;
+.button-container {
+  width: 100%;
+  text-align: right;
+  padding-right: 0;
+  padding-top: 25px;
+  &,
+  button {
+    height: 100%;
   }
 }
 
 @media (min-width: 48em) {
-  .row {
-    form {
-      order: initial;
-    }
-    .button-container {
-      width: initial;
-      padding: 25px;
-    }
+  form {
+    order: initial;
+  }
+  .button-container {
+    width: initial;
+    padding: 25px;
   }
 }

@@ -1,14 +1,21 @@
 <div>
   <h1>Login</h1>
-  <form novalidate [formGroup]="loginForm" (ngSubmit)="login()">
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <!-- Fake input to handle autofill -->
     <input style="display:none" type="password" name="fakepasswordremembered" />
 
+    <!-- Username input -->
     <label for="username">Username</label>
     <input type="text" id="username" formControlName="username" />
     <span *ngIf="isControlInvalid('username')" class="error"
-      >Please, enter a username.</span
+      >Username is required.</span
+    >
+    <span *ngIf="!isControlInvalid('username')" class="hint"
+      >Enter your username.</span
     >
 
+    <!-- Password input -->
     <label for="password">Password</label>
     <input
       type="password"
@@ -17,11 +24,16 @@
       autocomplete="new-password"
     />
     <span *ngIf="isControlInvalid('password')" class="error"
-      >Please, enter a password.</span
+      >Password is required.</span
+    >
+    <span *ngIf="!isControlInvalid('password')" class="hint"
+      >Enter your password.</span
     >
 
     <span class="button-container">
-      <button class="button" type="submit">Login</button>
+      <button class="button" type="submit" [disabled]="!loginForm.valid">
+        Login
+      </button>
     </span>
   </form>
 </div>

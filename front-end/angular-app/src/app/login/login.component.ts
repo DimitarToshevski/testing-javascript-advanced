@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this._store.dispatch(fromStore.login({ payload: this.loginForm.value }));
+    this.loginForm.reset();
   }
 
   isControlInvalid(controlName: string): boolean {

@@ -14,11 +14,20 @@
       <input type="number" id="quantity" formControlName="quantity" />
     </div>
 
-    <button type="submit" class="button" id="btnAddProduct">Add Product</button>
+    <button
+      type="submit"
+      class="button"
+      id="btnAddProduct"
+      [disabled]="!productsForm.valid"
+    >
+      Add Product
+    </button>
   </form>
 
   <div class="button-container">
-    <button class="button" (click)="logout()">Logout</button>
+    <button class="button" (click)="logout()">
+      Logout
+    </button>
   </div>
 </div>
 
@@ -29,7 +38,7 @@
 
   <ul class="shopping-list">
     <li *ngFor="let product of products" class="shopping-item">
-      <span class="shopping-item-text"
+      <span scratchText class="shopping-item-text"
         >Product: {{ product.name }}, Quantity: {{ product.quantity }}</span
       >
       <span class="close-button" (click)="deleteProduct(product)">×</span>
