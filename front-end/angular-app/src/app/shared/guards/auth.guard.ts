@@ -1,6 +1,6 @@
 import { CanActivate, Router } from "@angular/router";
 import { map, tap } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 
 import { Store } from "@ngrx/store";
 
@@ -18,6 +18,7 @@ export class AuthGuard implements CanActivate {
       tap(authenticated => {
         if (!authenticated) {
           this._router.navigateByUrl("/");
+          return of(false);
         }
       })
     );
