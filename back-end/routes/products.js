@@ -7,13 +7,17 @@ const router = express.Router();
 let products = [{ id: generateId(), name: 'Milk', quantity: 1 }];
 
 router.get('', checkAuth, (req, res) => {
-  res.json(products);
+  res.json({
+    message: 'Products fetched successfully!',
+    data: products
+  });
 });
 
 router.post('', checkAuth, (req, res) => {
   const newItemId = generateId();
 
   products.push({ id: newItemId, ...req.body });
+
   res.status(200).json({
     message: 'Product added successfully!',
     data: { id: newItemId }
