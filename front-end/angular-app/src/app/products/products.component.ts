@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProductsService } from "@shared/services";
 import { IProduct } from "@shared/interfaces";
 import { Store } from "@ngrx/store";
+import { map } from "rxjs/operators";
 
 import * as fromAuthStore from "@shared/store";
 
@@ -27,9 +28,12 @@ export class ProductsComponent implements OnInit {
       quantity: ["", [Validators.required, Validators.max(100)]]
     });
 
-    this._productsService.getProducts().subscribe(products => {
-      this.products = products;
-    });
+    this._productsService
+      .getProducts()
+      .pipe(map(response => response.data))
+      .subscribe(products => {
+        this.products = products;
+      });
   }
 
   addProduct(): void {

@@ -13,11 +13,13 @@ import { API_PREFIX } from "@shared/injection-tokens";
 export class ProductsService implements IProductsService {
   constructor(@Inject(API_PREFIX) private api, private _http: HttpClient) {}
 
-  getProducts(): Observable<Array<IProduct>> {
+  getProducts(): Observable<IResponse<Array<IProduct>>> {
     const token = sessionStorage.getItem("token");
     const headers = new HttpHeaders({ Authorization: token });
 
-    return this._http.get<Array<IProduct>>(`${this.api}/products`, { headers });
+    return this._http.get<IResponse<Array<IProduct>>>(`${this.api}/products`, {
+      headers
+    });
   }
 
   addProduct(product: IProduct): Observable<IResponse<IBaseDTO>> {
