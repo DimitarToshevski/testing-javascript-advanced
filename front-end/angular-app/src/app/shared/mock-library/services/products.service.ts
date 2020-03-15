@@ -5,6 +5,8 @@ import {
   IBaseDTO
 } from "@shared/interfaces";
 import { Observable, of } from "rxjs";
+import { createServerResponse, createBaseDTO } from "../factories";
+import { FakeBaseDTO } from "../fakes";
 
 export class MockProductsService implements IProductsService {
   getProducts(): Observable<IResponse<Array<IProduct>>> {
@@ -12,7 +14,9 @@ export class MockProductsService implements IProductsService {
   }
 
   addProduct(_product: IProduct): Observable<IResponse<IBaseDTO>> {
-    return of(null);
+    return of(
+      createServerResponse({ message: null, data: createBaseDTO(FakeBaseDTO) })
+    );
   }
 
   deleteProduct(_productId: string): Observable<IResponse> {
