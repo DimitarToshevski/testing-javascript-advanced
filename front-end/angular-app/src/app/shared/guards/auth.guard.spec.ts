@@ -7,7 +7,7 @@ import { AuthGuard } from "./auth.guard";
 
 import * as fromAuth from "@shared/store";
 
-fdescribe("AuthGuard", () => {
+describe("AuthGuard", () => {
   // Guard
   let guard: AuthGuard;
 
