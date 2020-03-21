@@ -9,7 +9,7 @@ export const getProducts = authToken => async dispatch => {
 
   dispatch({
     type: GET_PRODUCTS_SUCCESS,
-    payload: res
+    payload: res.data
   });
 };
 

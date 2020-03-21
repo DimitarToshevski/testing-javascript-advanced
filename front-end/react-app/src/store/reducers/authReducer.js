@@ -1,11 +1,11 @@
 import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT } from "../actions/authActions";
 
-const initialState = {
+export const initialState = {
   token: sessionStorage.getItem("token") || null,
   error: null
 };
 
-export default function authReducer(state = initialState, action) {
+export default function authReducer(state = initialState, action = {}) {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {

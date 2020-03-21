@@ -4,11 +4,11 @@ import {
   DELETE_PRODUCT_SUCCESS
 } from "../actions/productActions";
 
-const initialState = {
+export const initialState = {
   data: []
 };
 
-export default function productReducer(state = initialState, action) {
+export default function productReducer(state = initialState, action = {}) {
   switch (action.type) {
     case GET_PRODUCTS_SUCCESS:
       return {

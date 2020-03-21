@@ -7,7 +7,7 @@ const InputField = ({
   label,
   type = "text",
   value = "",
-  onChange,
+  onChange = () => {},
   ...props
 }) => (
   <InputWrapper {...props}>

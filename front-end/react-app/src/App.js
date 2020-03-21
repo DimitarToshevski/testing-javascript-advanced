@@ -5,14 +5,13 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import { connect } from "react-redux";
 
 import paths from "paths";
 import Login from "pages/Login/Login";
 import Products from "pages/Products/Products";
 import { GlobalStyles } from "./AppStyles";
 
-const App = ({ token }) => (
+const App = () => (
   <>
     <GlobalStyles />
     <Router>
@@ -24,15 +23,11 @@ const App = ({ token }) => (
           <Login />
         </Route>
         <Route path="/">
-          <Redirect to={token ? paths.products : paths.login} />
+          <Redirect to={paths.products} />
         </Route>
       </Switch>
     </Router>
   </>
 );
 
-const mapStateToProps = ({ auth }) => ({
-  token: auth.token
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

@@ -1,16 +1,22 @@
 import styled, { css } from "styled-components";
 
+export const buttonColors = {
+  primary: "#521751",
+  disabled: "lightgray",
+  default: "#ddd"
+};
+
 const getStylesByType = type => {
   switch (type) {
     case "primary":
       return css`
-        background: #521751;
+        background: ${buttonColors.primary};
         color: white;
-        border: 1px solid #521751;
+        border: 1px solid ${buttonColors.primary};
       `;
     default:
       return css`
-        background: #ddd;
+        background: ${buttonColors.default};
         border: none;
       `;
   }
@@ -26,8 +32,8 @@ export const Btn = styled.button`
   ${props => getStylesByType(props.type)}
 
   &:disabled {
-    background: lightgray;
-    border: 1px solid lightgray;
+    background: ${buttonColors.disabled};
+    border: 1px solid ${buttonColors.disabled};
     color: darkgrey;
     cursor: default;
   }
