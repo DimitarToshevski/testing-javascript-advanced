@@ -96,6 +96,12 @@
               "src/styles.scss"
             ],
             "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "sourceMap": false,
+              "karmaConfig": "karma.conf.prod.js"
+            }
           }
         },
         "lint": {
@@ -124,6 +130,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "angular-app"
 }
