@@ -10,12 +10,12 @@ export const login = createAction(
 
 export const loginSuccess = createAction(
   "[Auth] Login Success",
-  props<{ payload: User }>()
+  props<{ payload: { user: User } }>()
 );
 
 export const loginFailed = createAction(
   "[Auth] Login Failed",
-  props<{ payload: IResponse }>()
+  props<{ payload: { errorMessage: string } }>()
 );
 
 export const logout = createAction("[Auth] Logout");

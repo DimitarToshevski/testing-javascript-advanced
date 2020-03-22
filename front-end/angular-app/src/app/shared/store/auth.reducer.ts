@@ -27,13 +27,13 @@ const authReducer = createReducer(
   on(fromActions.login, state => ({ ...state, loading: true })),
   on(fromActions.loginSuccess, (state, { payload }) => ({
     ...state,
-    user: payload,
+    user: payload.user,
     loading: authInitialState.loading,
     errorMessage: authInitialState.errorMessage
   })),
   on(fromActions.loginFailed, (state, { payload }) => ({
     ...state,
-    errorMessage: payload.message,
+    errorMessage: payload.errorMessage,
     loading: authInitialState.loading
   })),
   on(fromActions.logout, () => ({ ...authInitialState }))

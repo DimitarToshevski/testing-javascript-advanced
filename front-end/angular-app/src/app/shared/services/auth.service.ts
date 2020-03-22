@@ -37,14 +37,14 @@ export class AuthService implements IAuthService {
 
           this._store.dispatch(
             fromAuthActions.loginSuccess({
-              payload: new User(response.data)
+              payload: { user: new User(response.data) }
             })
           );
         }),
         catchError(err => {
           this._store.dispatch(
             fromAuthActions.loginFailed({
-              payload: err
+              payload: { errorMessage: err.message }
             })
           );
 
