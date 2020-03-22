@@ -52,6 +52,7 @@ const Login = ({ token, error, dispatch }) => {
 
         <ButtonWrapper>
           <LoginButton
+            data-testid="loginBtn"
             text="Login"
             type="primary"
             onClick={login}

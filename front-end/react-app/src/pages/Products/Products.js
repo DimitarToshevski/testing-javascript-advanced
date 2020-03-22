@@ -29,7 +29,7 @@ const Products = ({ token, products, dispatch }) => {
     }
   }, [dispatch, token]);
 
-  const handleAdd = async () => {
+  const handleAdd = () => {
     const newProduct = {
       name,
       quantity
@@ -40,8 +40,7 @@ const Products = ({ token, products, dispatch }) => {
     resetForm();
   };
 
-  const handleDelete = async productId =>
-    dispatch(deleteProduct(productId, token));
+  const handleDelete = productId => dispatch(deleteProduct(productId, token));
 
   const handleLogout = () => dispatch(logout());
 
@@ -67,6 +66,7 @@ const Products = ({ token, products, dispatch }) => {
             onChange={handleChange}
           />
           <Button
+            data-testid="addProductBtn"
             text="Add Product"
             type="primary"
             onClick={handleAdd}

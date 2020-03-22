@@ -16,7 +16,7 @@ const ShoppingItem = ({ id, name, quantity, onDelete }) => {
       <ItemText
         completed={isComplete}
       >{`Product: ${name}, Quantity: ${quantity}`}</ItemText>
-      <DeleteButton onClick={handleDelete}>&times;</DeleteButton>
+      <DeleteButton onClick={handleDelete}>×</DeleteButton>
     </Item>
   );
 };
