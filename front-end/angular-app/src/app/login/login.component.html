@@ -1,37 +1,44 @@
 <div>
-  <h1>Login</h1>
+  <h1 id="title">Login</h1>
 
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <!-- Fake input to handle autofill -->
     <input style="display:none" type="password" name="fakepasswordremembered" />
 
     <!-- Username input -->
-    <label for="username">Username</label>
-    <input type="text" id="username" formControlName="username" />
-    <span *ngIf="isControlInvalid('username')" class="error"
+    <label for="username-input" id="username-label">Username</label>
+    <input type="text" id="username-input" formControlName="username" />
+
+    <span *ngIf="isControlInvalid('username')" class="error" id="username-error"
       >Username is required.</span
     >
-    <span *ngIf="!isControlInvalid('username')" class="hint"
+
+    <span *ngIf="!isControlInvalid('username')" class="hint" id="username-hint"
       >Enter your username.</span
     >
 
     <!-- Password input -->
-    <label for="password">Password</label>
+    <label for="password-input" id="password-label">Password</label>
     <input
       type="password"
-      id="password"
+      id="password-input"
       formControlName="password"
       autocomplete="new-password"
     />
-    <span *ngIf="isControlInvalid('password')" class="error"
+    <span *ngIf="isControlInvalid('password')" class="error" id="password-error"
       >Password is required.</span
     >
-    <span *ngIf="!isControlInvalid('password')" class="hint"
+    <span *ngIf="!isControlInvalid('password')" class="hint" id="password-hint"
       >Enter your password.</span
     >
 
     <span class="button-container">
-      <button class="button" type="submit" [disabled]="!loginForm.valid">
+      <button
+        class="button"
+        type="submit"
+        id="login-button"
+        [disabled]="!loginForm.valid"
+      >
         Login
       </button>
     </span>
