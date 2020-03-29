@@ -4,7 +4,8 @@ const { generateId } = require('../utils/helpers');
 
 const router = express.Router();
 
-let products = [{ id: generateId(), name: 'Milk', quantity: 1 }];
+const initialState = [{ id: generateId(), name: 'Milk', quantity: 1 }];
+let products = [...initialState];
 
 router.get('', checkAuth, (req, res) => {
   res.json({
@@ -29,6 +30,14 @@ router.delete('/:productId', checkAuth, (req, res) => {
 
   res.status(200).json({
     message: 'Product deleted successfully!'
+  });
+});
+
+router.post('/reset', (req, res) => {
+  products = [...initialState];
+
+  res.status(200).json({
+    message: 'Database reset successfully!'
   });
 });
 

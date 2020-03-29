@@ -1,7 +1,8 @@
+import AuthService from "services/AuthService";
 import { LOGIN_SUCCESS, LOGIN_ERROR, LOGOUT } from "../actions/authActions";
 
 export const initialState = {
-  token: sessionStorage.getItem("token") || null,
+  token: AuthService.getToken() || null,
   error: null
 };
 

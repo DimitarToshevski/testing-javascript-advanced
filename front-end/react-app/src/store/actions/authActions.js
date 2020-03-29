@@ -1,4 +1,5 @@
 import ApiService from "services/ApiService";
+import AuthService from "services/AuthService";
 
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_ERROR = "LOGIN_ERROR";
@@ -11,7 +12,7 @@ export const loginUser = (username, password) => async dispatch => {
   });
 
   if (res.data) {
-    sessionStorage.setItem("token", res.data.token);
+    AuthService.setToken(res.data.token);
 
     dispatch({
       type: LOGIN_SUCCESS,
@@ -26,7 +27,7 @@ export const loginUser = (username, password) => async dispatch => {
 };
 
 export const logout = () => dispatch => {
-  sessionStorage.removeItem("token");
+  AuthService.removeToken();
 
   dispatch({ type: LOGOUT });
 };

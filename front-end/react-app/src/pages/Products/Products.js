@@ -25,7 +25,7 @@ const Products = ({ token, products, dispatch }) => {
 
   useEffect(() => {
     if (token) {
-      dispatch(getProducts(token));
+      dispatch(getProducts());
     }
   }, [dispatch, token]);
 
@@ -35,12 +35,12 @@ const Products = ({ token, products, dispatch }) => {
       quantity
     };
 
-    dispatch(addProduct(newProduct, token));
+    dispatch(addProduct(newProduct));
 
     resetForm();
   };
 
-  const handleDelete = productId => dispatch(deleteProduct(productId, token));
+  const handleDelete = productId => dispatch(deleteProduct(productId));
 
   const handleLogout = () => dispatch(logout());
 

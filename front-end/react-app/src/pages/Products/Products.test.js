@@ -26,7 +26,6 @@ jest.mock("react-router-dom", () => ({
 jest.mock("store/actions/productActions");
 jest.mock("store/actions/authActions");
 
-const token = "secret-token";
 const products = [
   { id: 1, name: "Product 1", quantity: "3" },
   { id: 2, name: "Product 2", quantity: "2" }
@@ -39,7 +38,7 @@ const productNameRegex = name => new RegExp(`${name}`, "i");
 const renderProductsPageWithToken = () => {
   const store = createStore(
     rootReducer,
-    { auth: { token } },
+    { auth: { token: "secret-token" } },
     applyMiddleware(thunk)
   );
 
@@ -64,9 +63,7 @@ test("should redirect to login page if no auth token is present", () => {
 test("should show list of products if auth token is present", async () => {
   const { getAllByText } = renderProductsPageWithToken();
 
-  expect(mockGetProducts).toHaveBeenCalledWith(token);
   expect(mockGetProducts).toHaveBeenCalledTimes(1);
-
   await wait(() => expect(getAllByText("×").length).toEqual(products.length));
 });
 
@@ -127,7 +124,7 @@ test("should add product", async () => {
   userEvent.type(quantity, newProduct.quantity);
   userEvent.click(addButton);
 
-  expect(mockAddProduct).toHaveBeenCalledWith(newProduct, token);
+  expect(mockAddProduct).toHaveBeenCalledWith(newProduct);
   expect(mockAddProduct).toHaveBeenCalledTimes(1);
 
   expect(productName.value).toEqual("");
@@ -156,7 +153,7 @@ test("should delete product", async () => {
     );
   });
 
-  expect(mockDeleteProduct).toHaveBeenCalledWith(productToDelete.id, token);
+  expect(mockDeleteProduct).toHaveBeenCalledWith(productToDelete.id);
   expect(mockDeleteProduct).toHaveBeenCalledTimes(1);
 
   await wait(() =>

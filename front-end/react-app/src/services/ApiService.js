@@ -1,4 +1,5 @@
 import config from "config";
+import AuthService from "services/AuthService";
 
 const sendRequest = async (url, options = {}) => {
   const response = await fetch(`${config.api}/${url}`, options);
@@ -6,16 +7,18 @@ const sendRequest = async (url, options = {}) => {
   return await response.json();
 };
 
-const get = (url, token) =>
+const get = url =>
   sendRequest(url, {
     method: "GET",
     headers: {
-      Authorization: token
+      Authorization: AuthService.getToken()
     }
   });
 
-const post = (url, data, token = null) =>
-  sendRequest(url, {
+const post = (url, data) => {
+  const token = AuthService.getToken();
+
+  return sendRequest(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -23,13 +26,14 @@ const post = (url, data, token = null) =>
     },
     body: JSON.stringify(data)
   });
+};
 
-const remove = (url, token) =>
+const remove = url =>
   sendRequest(url, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: token
+      Authorization: AuthService.getToken()
     }
   });
 
