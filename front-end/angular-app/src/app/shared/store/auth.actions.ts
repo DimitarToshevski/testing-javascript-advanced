@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 
-import { ILoginInput, IResponse } from "@shared/interfaces";
+import { ILoginInput } from "@shared/interfaces";
 import { User } from "@shared/models";
 
 export const login = createAction(
