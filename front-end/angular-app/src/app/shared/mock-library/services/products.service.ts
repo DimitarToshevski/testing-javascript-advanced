@@ -5,12 +5,21 @@ import {
   IBaseDTO
 } from "@shared/interfaces";
 import { Observable, of } from "rxjs";
-import { createServerResponse, createBaseDTO } from "../factories";
+import {
+  createServerResponse,
+  createBaseDTO,
+  createProduct
+} from "../factories";
 import { FakeBaseDTO } from "../fakes";
 
 export class MockProductsService implements IProductsService {
   getProducts(): Observable<IResponse<Array<IProduct>>> {
-    return of(null);
+    return of(
+      createServerResponse({
+        message: null,
+        data: [createProduct({ id: "1", name: "fake product", quantity: 3 })]
+      })
+    );
   }
 
   addProduct(_product: IProduct): Observable<IResponse<IBaseDTO>> {

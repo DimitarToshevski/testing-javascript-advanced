@@ -60,11 +60,15 @@ export class ProductsComponent implements OnInit {
     this._store.dispatch(fromAuthStore.logout());
   }
 
-  isControlInvalid(controlName: string): string {
+  isControlInvalid(controlName: string): boolean {
     const control = this.productsForm.get(controlName);
 
-    return (
-      !control.valid && control.dirty && Object.keys(control.errors).toString()
-    );
+    return !control.valid && control.dirty;
+  }
+
+  getControlErrors(controlName: string): Array<string> {
+    const control = this.productsForm.get(controlName);
+
+    return Object.keys(control.errors);
   }
 }

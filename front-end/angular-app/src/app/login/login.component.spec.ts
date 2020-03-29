@@ -99,7 +99,7 @@ describe("LoginComponent", () => {
 
     describe("SUBMIT BUTTON", () => {
       it("should have a submit button with text Login", () => {
-        expect(selectElement("#login-button").textContent);
+        expect(selectElement("#login-button").textContent).toEqual("Login");
         expect(
           selectElement("#login-button").attributes.getNamedItem("type").value
         ).toBe("submit");

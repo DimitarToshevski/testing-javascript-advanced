@@ -14,9 +14,11 @@ describe("ErrorMessagePipe", () => {
   });
 
   it("should return the proper error message based on the inputted error name", () => {
-    expect(pipe.transform("required", null)).toEqual("The field is required.");
-    expect(pipe.transform("max", 25)).toEqual("Enter a number less than 25");
-    expect(pipe.transform("error that does not exist", 25)).toEqual(
+    expect(pipe.transform(["required"], null)).toEqual(
+      "The field is required."
+    );
+    expect(pipe.transform(["max"], 25)).toEqual("Enter a number less than 25");
+    expect(pipe.transform(["error that does not exist"], 25)).toEqual(
       "The value you entered is invalid."
     );
   });

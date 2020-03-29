@@ -5,29 +5,31 @@
     (ngSubmit)="addProduct()"
   >
     <div class="input-container">
-      <label for="name">Product Name</label>
-      <input type="text" id="name" formControlName="name" />
+      <label for="product-name" id="product-name-label">Product Name</label>
+      <input type="text" id="product-name" formControlName="name" />
       <span
-        *ngIf="
-          !productsForm.get('name').valid && productsForm.get('name').dirty
-        "
+        *ngIf="isControlInvalid('name')"
         class="error"
-        >{{ isControlInvalid("name") | errorMessage }}</span
+        id="product-name-error"
+        >{{ getControlErrors("name") | errorMessage }}</span
       >
     </div>
 
     <div class="input-container">
-      <label for="quantity">Quantity</label>
-      <input type="number" id="quantity" formControlName="quantity" />
-      <span *ngIf="isControlInvalid('quantity') as error" class="error">{{
-        error | errorMessage: 100
-      }}</span>
+      <label for="product-quantity" id="product-quantity-label">Quantity</label>
+      <input type="number" id="product-quantity" formControlName="quantity" />
+      <span
+        *ngIf="isControlInvalid('quantity')"
+        class="error"
+        id="product-quantity-error"
+        >{{ getControlErrors("quantity") | errorMessage: 100 }}</span
+      >
     </div>
 
     <button
       type="submit"
       class="button"
-      id="btnAddProduct"
+      id="add-product-button"
       [disabled]="!productsForm.valid"
     >
       Add Product
@@ -35,18 +37,16 @@
   </form>
 
   <div class="button-container">
-    <button class="button" (click)="logout()">
-      Logout
-    </button>
+    <button class="button" id="logout-button" (click)="logout()">Logout</button>
   </div>
 </div>
 
 <hr />
 
 <section class="shopping-list-output">
-  <h3>Shopping List</h3>
+  <h3 id="shopping-list-title">Shopping List</h3>
 
-  <ul class="shopping-list">
+  <ul class="shopping-list" id="shopping-list">
     <li *ngFor="let product of products" class="shopping-item">
       <span scratchText class="shopping-item-text"
         >Product: {{ product.name | titlecase }}, Quantity:

@@ -9,38 +9,18 @@
     <label for="username-input" id="username-label">Username</label>
     <input type="text" id="username-input" formControlName="username" />
 
-    <span *ngIf="isControlInvalid('username')" class="error" id="username-error"
-      >Username is required.</span
-    >
+    <span *ngIf="isControlInvalid('username')" class="error" id="username-error">Username is required.</span>
 
-    <span *ngIf="!isControlInvalid('username')" class="hint" id="username-hint"
-      >Enter your username.</span
-    >
+    <span *ngIf="!isControlInvalid('username')" class="hint" id="username-hint">Enter your username.</span>
 
     <!-- Password input -->
     <label for="password-input" id="password-label">Password</label>
-    <input
-      type="password"
-      id="password-input"
-      formControlName="password"
-      autocomplete="new-password"
-    />
-    <span *ngIf="isControlInvalid('password')" class="error" id="password-error"
-      >Password is required.</span
-    >
-    <span *ngIf="!isControlInvalid('password')" class="hint" id="password-hint"
-      >Enter your password.</span
-    >
+    <input type="password" id="password-input" formControlName="password" autocomplete="new-password" />
+    <span *ngIf="isControlInvalid('password')" class="error" id="password-error">Password is required.</span>
+    <span *ngIf="!isControlInvalid('password')" class="hint" id="password-hint">Enter your password.</span>
 
     <span class="button-container">
-      <button
-        class="button"
-        type="submit"
-        id="login-button"
-        [disabled]="!loginForm.valid"
-      >
-        Login
-      </button>
+      <button class="button" type="submit" id="login-button" [disabled]="!loginForm.valid">Login</button>
     </span>
   </form>
 </div>

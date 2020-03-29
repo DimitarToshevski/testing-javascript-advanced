@@ -10,9 +10,9 @@ const errorMessagesMap = {
   name: "errorMessage"
 })
 export class ErrorMessagePipe implements PipeTransform {
-  transform(value: string, maximumAmount: number): string {
-    return errorMessagesMap[value]
-      ? errorMessagesMap[value] + (value === "max" ? maximumAmount : "")
+  transform(value: Array<string>, maximumAmount: number): string {
+    return errorMessagesMap[value[0]]
+      ? errorMessagesMap[value[0]] + (value[0] === "max" ? maximumAmount : "")
       : errorMessagesMap["customError"];
   }
 }
