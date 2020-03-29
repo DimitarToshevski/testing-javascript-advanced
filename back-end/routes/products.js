@@ -33,6 +33,21 @@ router.delete('/:productId', checkAuth, (req, res) => {
   });
 });
 
+router.put('/:productId', checkAuth, (req, res) => {
+  products = products.map(item => {
+    if (item.id === req.params.productId) {
+      return req.body;
+    }
+
+    return item;
+  });
+
+  res.status(200).json({
+    message: 'Product updated successfully!',
+    data: { ...req.body }
+  });
+});
+
 router.post('/reset', (req, res) => {
   products = [...initialState];
 

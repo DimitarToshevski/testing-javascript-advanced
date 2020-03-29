@@ -1,44 +1,32 @@
 import config from "config";
 import AuthService from "services/AuthService";
 
-const sendRequest = async (url, options = {}) => {
-  const response = await fetch(`${config.api}/${url}`, options);
+const sendRequest = async (url, options = {}, useAuth = true) => {
+  const response = await fetch(`${config.api}/${url}`, {
+    ...options,
+    headers: {
+      ...options.headers,
+      "Content-Type": "application/json",
+      ...(useAuth && { Authorization: AuthService.getToken() })
+    }
+  });
 
   return await response.json();
 };
 
-const get = url =>
-  sendRequest(url, {
-    method: "GET",
-    headers: {
-      Authorization: AuthService.getToken()
-    }
-  });
+const get = url => sendRequest(url, { method: "GET" });
 
-const post = (url, data) => {
-  const token = AuthService.getToken();
+const post = (url, data, useAuth = true) =>
+  sendRequest(url, { method: "POST", body: JSON.stringify(data) }, useAuth);
 
-  return sendRequest(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && { Authorization: token })
-    },
-    body: JSON.stringify(data)
-  });
-};
+const remove = url => sendRequest(url, { method: "DELETE" });
 
-const remove = url =>
-  sendRequest(url, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: AuthService.getToken()
-    }
-  });
+const update = (url, data) =>
+  sendRequest(url, { method: "PUT", body: JSON.stringify(data) });
 
 export default {
   get,
   post,
-  remove
+  remove,
+  update
 };

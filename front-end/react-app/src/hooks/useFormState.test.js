@@ -9,7 +9,7 @@ test("useFormState should set initial state", () => {
     [quantityField]: "5"
   };
   const { result } = renderHook(() => useFormState(initialState));
-  const [formState] = result.current;
+  const { formState } = result.current;
 
   expect(formState).toEqual(initialState);
 });
@@ -22,22 +22,22 @@ test("useFormState updates form state on change", () => {
   const { result } = renderHook(() => useFormState(initialState));
 
   act(() => {
-    const [, handleChange] = result.current;
+    const { handleChange } = result.current;
 
     handleChange({ target: { id: nameField, value: name } });
   });
 
-  const [formState] = result.current;
+  const { formState } = result.current;
 
   expect(formState).toEqual({ ...initialState, name });
 
   act(() => {
-    const [, handleChange] = result.current;
+    const { handleChange } = result.current;
 
     handleChange({ target: { id: quantityField, value: quantity } });
   });
 
-  const [newState] = result.current;
+  const { formState: newState } = result.current;
 
   expect(newState).toEqual({ name, quantity });
 });
@@ -54,21 +54,44 @@ test("useFormState should reset form state", () => {
   );
 
   act(() => {
-    const [, handleChange] = result.current;
+    const { handleChange } = result.current;
 
     handleChange({ target: { id: quantityField, value: newQuantity } });
   });
 
-  const [formState] = result.current;
+  const { formState } = result.current;
 
   expect(formState.quantity).toEqual(newQuantity);
 
   act(() => {
-    const [, , resetForm] = result.current;
+    const { resetForm } = result.current;
 
     resetForm();
   });
 
-  const [resetState] = result.current;
+  const { formState: resetState } = result.current;
   expect(resetState.quantity).toEqual(initialQuantity);
+});
+
+test("useFormState should update entire form state", () => {
+  const initialState = {
+    [nameField]: "Bananas",
+    [quantityField]: "7"
+  };
+  const updatedState = {
+    [nameField]: "Oranges",
+    [quantityField]: "10"
+  };
+
+  const { result } = renderHook(() => useFormState(initialState));
+
+  act(() => {
+    const { updateFormState } = result.current;
+
+    updateFormState(updatedState);
+  });
+
+  const { formState } = result.current;
+
+  expect(formState).toEqual(updatedState);
 });

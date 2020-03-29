@@ -6,10 +6,14 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 export const LOGOUT = "LOGOUT";
 
 export const loginUser = (username, password) => async dispatch => {
-  const res = await ApiService.post("login", {
-    username,
-    password
-  });
+  const res = await ApiService.post(
+    "login",
+    {
+      username,
+      password
+    },
+    false
+  );
 
   if (res.data) {
     AuthService.setToken(res.data.token);

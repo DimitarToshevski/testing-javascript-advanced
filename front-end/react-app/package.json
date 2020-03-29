@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test:coverage": "react-scripts test --watchAll=false --coverage"
+    "test:coverage": "react-scripts test --watchAll=false --coverage",
+    "test:e2e": "npx cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"

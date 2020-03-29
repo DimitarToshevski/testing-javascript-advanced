@@ -16,7 +16,7 @@ import {
 } from "./LoginStyles";
 
 const Login = ({ token, error, dispatch }) => {
-  const [formState, handleChange] = useFormState({
+  const { formState, handleChange } = useFormState({
     username: "",
     password: ""
   });

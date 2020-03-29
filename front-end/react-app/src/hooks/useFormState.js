@@ -16,5 +16,9 @@ export const useFormState = initialState => {
     setFormState(initialState);
   };
 
-  return [formState, handleChange, resetForm];
+  const updateFormState = newState => {
+    setFormState(newState);
+  };
+
+  return { formState, handleChange, resetForm, updateFormState } ;
 };

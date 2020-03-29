@@ -24,5 +24,5 @@ test("should render Products page", () => {
   });
 
   expect(history.location.pathname).toEqual(paths.products);
-  expect(getByTestId("addProductBtn")).toBeInTheDocument();
+  expect(getByTestId("productBtn")).toBeInTheDocument();
 });

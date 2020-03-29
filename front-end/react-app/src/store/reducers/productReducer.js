@@ -1,7 +1,8 @@
 import {
   GET_PRODUCTS_SUCCESS,
   ADD_PRODUCT_SUCCESS,
-  DELETE_PRODUCT_SUCCESS
+  DELETE_PRODUCT_SUCCESS,
+  EDIT_PRODUCT_SUCCESS
 } from "../actions/productActions";
 
 export const initialState = {
@@ -26,6 +27,18 @@ export default function productReducer(state = initialState, action = {}) {
       return {
         ...state,
         data: state.data.filter(product => product.id !== action.payload)
+      };
+
+    case EDIT_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        data: state.data.map((product) => {
+          if (product.id === action.payload.id) {
+            return action.payload;
+          }
+
+          return product;
+        })
       };
 
     default:
