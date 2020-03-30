@@ -5,12 +5,27 @@ import { ErrorMessagePipe } from "@shared/pipes";
 import { ReactiveFormsModule } from "@angular/forms";
 import { ProductsService } from "@shared/services";
 import { MockProductsService } from "@shared/mock-library/services";
-import { provideMockStore } from "@ngrx/store/testing";
+import { provideMockStore, MockStore } from "@ngrx/store/testing";
+
+import * as fromStore from "../shared/store";
+import { Store } from '@ngrx/store';
 
 describe("ProductsComponent", () => {
   // Component
   let component: ProductsComponent;
   let fixture: ComponentFixture<ProductsComponent>;
+
+  // Store
+  let store: MockStore<fromStore.IAuthState>;
+
+  // Services
+  let productsService: ProductsService;
+
+  // Spy objects
+  let onGetProductsSpy: jasmine.Spy;
+  let onAddProductSpy: jasmine.Spy;
+  let onDeleteProductSpy: jasmine.Spy;
+  let onDispatchActionSpy: jasmine.Spy;
 
   // Helpers
   const selectElement = (selector: string): HTMLElement =>
@@ -34,9 +49,22 @@ describe("ProductsComponent", () => {
   }));
 
   beforeEach(() => {
+    // Store init
+    store = TestBed.get(Store)
+
+    // Services init
+    productsService = TestBed.get(ProductsService)
+
     // Component init
     fixture = TestBed.createComponent(ProductsComponent);
     component = fixture.componentInstance;
+
+    // Spy object init
+    onGetProductsSpy = spyOn(productsService, 'getProducts').and.callThrough()
+    onAddProductSpy = spyOn(productsService, 'addProduct').and.callThrough()
+    onDeleteProductSpy = spyOn(productsService, 'deleteProduct').and.callThrough()
+    onDispatchActionSpy = spyOn(store, 'dispatch')
+
     fixture.detectChanges();
   });
 
@@ -147,6 +175,66 @@ describe("ProductsComponent", () => {
         });
         fixture.detectChanges();
         expect(selectElements("#shopping-list li").length).toBe(2);
+      });
+    });
+  });
+
+  describe('FUNCTIONALITY TESTS', () => {
+    it('should get the products initially', () => {
+      expect(onGetProductsSpy).toHaveBeenCalled()
+    });
+
+    it('should call the products service with proper DTO and update products when adding a new product', () => {
+      expect(component.products.length).toBe(1);
+
+      component.productsForm.get("name").setValue("test-product");
+      component.productsForm.get("quantity").setValue(2);
+      component.addProduct();
+
+      expect(onAddProductSpy).toHaveBeenCalledWith({ name: 'test-product', quantity: 2 })
+      expect(component.products.length).toBe(2);
+    })
+
+    it('should call the products service with proper ID and update products when deleting a product', () => {
+      expect(component.products.length).toBe(1)
+
+      component.deleteProduct({ id: '1' });
+
+      expect(onDeleteProductSpy).toHaveBeenCalledWith('1')
+
+      expect(component.products.length).toBe(0)
+    })
+
+    it('should dispatch an action logout on logout', () => {
+      component.logout();
+      expect(onDispatchActionSpy).toHaveBeenCalledWith(fromStore.logout())
+    });
+
+    it('should return the control.errors keys', () => {
+      expect(component.getControlErrors('name')).toEqual(['required'])
+    });
+
+    describe("CHECK CONTROL VALIDITY", () => {
+      it("should return true when checking isControlInvalid if the control is not valid and is dirty", () => {
+        expect(component.isControlInvalid("name")).toBe(false);
+
+        component.productsForm.get("name").markAsDirty();
+
+        expect(component.isControlInvalid("name")).toBe(true);
+      });
+
+      it("should return false when checking isControlInvalid if the control is not valid or is not dirty", () => {
+        expect(component.isControlInvalid("name")).toBe(false); // not dirty and not valid
+
+        component.productsForm.get("name").setValue("test"); // not dirty and valid
+
+        expect(component.isControlInvalid("name")).toBe(false);
+
+        component.productsForm.get("name").setValue("test");
+
+        component.productsForm.get("name").markAsDirty(); // dirty and valid
+
+        expect(component.isControlInvalid("name")).toBe(false);
       });
     });
   });
