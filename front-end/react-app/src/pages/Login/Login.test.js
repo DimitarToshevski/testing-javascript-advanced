@@ -3,17 +3,17 @@ import { wait } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Redirect as MockRedirect } from "react-router-dom";
 
-import { renderWithReduxAndRouter } from "setupTests";
+import { renderWithRedux } from "setupTests";
 import paths from "paths";
 import {
   loginUser as mockLoginUser,
   LOGIN_SUCCESS,
-  LOGIN_ERROR
+  LOGIN_ERROR,
 } from "store/actions/authActions";
 import Login from "./Login";
 
 jest.mock("react-router-dom", () => ({
-  Redirect: jest.fn(() => null)
+  Redirect: jest.fn(() => null),
 }));
 
 jest.mock("store/actions/authActions");
@@ -22,15 +22,15 @@ const usernameFieldLabel = "Username";
 const passwordFieldLabel = "Password";
 
 test("should redirect to Products page if auth token exists", () => {
-  renderWithReduxAndRouter(<Login />, {
-    initialState: { auth: { token: "secret-token" } }
+  renderWithRedux(<Login />, {
+    initialState: { auth: { token: "secret-token" } },
   });
 
   expect(MockRedirect).toHaveBeenCalledWith({ to: paths.products }, {});
 });
 
 test("login button should be disabled if either input field is empty", () => {
-  const { getByLabelText, getByTestId } = renderWithReduxAndRouter(<Login />);
+  const { getByLabelText, getByTestId } = renderWithRedux(<Login />);
   const loginButton = getByTestId("loginBtn");
   expect(loginButton).toBeDisabled();
 
@@ -44,16 +44,14 @@ test("should redirect to Products page if login is successful", async () => {
   const username = "test";
   const password = "test";
 
-  const { getByLabelText, getByTestId, store } = renderWithReduxAndRouter(
-    <Login />
-  );
+  const { getByLabelText, getByTestId, store } = renderWithRedux(<Login />);
 
   mockLoginUser.mockImplementation(() => async () => {
     await Promise.resolve();
 
     store.dispatch({
       type: LOGIN_SUCCESS,
-      payload: "secret-token"
+      payload: "secret-token",
     });
   });
 
@@ -71,19 +69,16 @@ test("should redirect to Products page if login is successful", async () => {
 
 test("should show error message if login is unsuccessful", async () => {
   const error = "Incorrect username or password";
-  const {
-    getByLabelText,
-    findByText,
-    getByTestId,
-    store
-  } = renderWithReduxAndRouter(<Login />);
+  const { getByLabelText, findByText, getByTestId, store } = renderWithRedux(
+    <Login />
+  );
 
   mockLoginUser.mockImplementation(() => async () => {
     await Promise.resolve();
 
     store.dispatch({
       type: LOGIN_ERROR,
-      payload: error
+      payload: error,
     });
   });
 

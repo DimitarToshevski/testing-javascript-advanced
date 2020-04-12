@@ -23,22 +23,7 @@ export const renderWithRedux = (
     <Provider store={store}>{children}</Provider>
   );
 
-  return render(ui, { wrapper: Wrapper, ...options });
-};
-
-export const renderWithRouter = (
-  ui,
-  {
-    initialRoute = "/",
-    history = createMemoryHistory({ initialEntries: [initialRoute] }),
-    ...options
-  } = {}
-) => {
-  const Wrapper = ({ children }) => (
-    <Router history={history}>{children}</Router>
-  );
-
-  return { ...render(ui, { wrapper: Wrapper, ...options }), history };
+  return { ...render(ui, { wrapper: Wrapper, ...options }), store };
 };
 
 export const renderWithReduxAndRouter = (
@@ -60,6 +45,6 @@ export const renderWithReduxAndRouter = (
   return {
     ...render(ui, { wrapper: Wrapper, ...options }),
     history,
-    store
+    store,
   };
 };

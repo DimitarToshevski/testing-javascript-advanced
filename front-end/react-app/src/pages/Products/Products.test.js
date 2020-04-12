@@ -5,7 +5,7 @@ import { wait, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Redirect as MockRedirect } from "react-router-dom";
 
-import { renderWithReduxAndRouter } from "setupTests";
+import { renderWithRedux } from "setupTests";
 import rootReducer from "store/reducers";
 import paths from "paths";
 import {
@@ -16,13 +16,13 @@ import {
   ADD_PRODUCT_SUCCESS,
   DELETE_PRODUCT_SUCCESS,
   GET_PRODUCTS_SUCCESS,
-  EDIT_PRODUCT_SUCCESS
+  EDIT_PRODUCT_SUCCESS,
 } from "store/actions/productActions";
 import { logout as mockLogout, LOGOUT } from "store/actions/authActions";
 import Products from "./Products";
 
 jest.mock("react-router-dom", () => ({
-  Redirect: jest.fn(() => null)
+  Redirect: jest.fn(() => null),
 }));
 
 jest.mock("store/actions/productActions");
@@ -30,7 +30,7 @@ jest.mock("store/actions/authActions");
 
 const products = [
   { id: 1, name: "Product 1", quantity: "3" },
-  { id: 2, name: "Product 2", quantity: "2" }
+  { id: 2, name: "Product 2", quantity: "2" },
 ];
 const productFieldLabel = "Product Name";
 const quantityFieldLabel = "Quantity";
@@ -47,15 +47,15 @@ const renderProductsPageWithToken = () => {
 
     store.dispatch({
       type: GET_PRODUCTS_SUCCESS,
-      payload: products
+      payload: products,
     });
   });
 
-  return renderWithReduxAndRouter(<Products />, { store });
+  return renderWithRedux(<Products />, { store });
 };
 
 test("should redirect to login page if no auth token is present", () => {
-  renderWithReduxAndRouter(<Products />);
+  renderWithRedux(<Products />);
 
   expect(MockRedirect).toHaveBeenCalledWith({ to: paths.login }, {});
 });
@@ -85,7 +85,7 @@ test("should logout user", () => {
   const { getByText, store } = renderProductsPageWithToken();
   mockLogout.mockImplementation(() => () => {
     store.dispatch({
-      type: LOGOUT
+      type: LOGOUT,
     });
   });
 
@@ -100,7 +100,7 @@ test("should add product", async () => {
   const newProductId = 3;
   const newProduct = {
     name: "Product 3",
-    quantity: "2"
+    quantity: "2",
   };
 
   const { getByLabelText, getByTestId, store } = renderProductsPageWithToken();
@@ -109,7 +109,7 @@ test("should add product", async () => {
 
     store.dispatch({
       type: ADD_PRODUCT_SUCCESS,
-      payload: { id: newProductId, ...newProduct }
+      payload: { id: newProductId, ...newProduct },
     });
   });
 
@@ -142,7 +142,7 @@ test("should delete product", async () => {
 
     store.dispatch({
       type: DELETE_PRODUCT_SUCCESS,
-      payload: productToDelete.id
+      payload: productToDelete.id,
     });
   });
 
@@ -164,21 +164,21 @@ test("should edit existing product", async () => {
   const editedProduct = {
     ...productToEdit,
     name: `${productToEdit.name} Name`,
-    quantity: "5"
+    quantity: "5",
   };
 
   const {
     getByLabelText,
     getByTestId,
     queryByTestId,
-    store
+    store,
   } = renderProductsPageWithToken();
   mockEditProduct.mockImplementation(() => async () => {
     await Promise.resolve();
 
     store.dispatch({
       type: EDIT_PRODUCT_SUCCESS,
-      payload: editedProduct
+      payload: editedProduct,
     });
   });
 
